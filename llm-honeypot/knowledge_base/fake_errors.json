@@ -1,0 +1,26 @@
+[
+  {
+    "code": "SQL_ERROR",
+    "variants": [
+      "MySQL Error 1064: You have an error in your SQL syntax near '{payload}'",
+      "SQL syntax error at line 1 near '{payload}'",
+      "Database query failed: syntax error near '{payload}'"
+    ]
+  },
+  {
+    "code": "AUTH_FAILED",
+    "variants": [
+      "Invalid credentials",
+      "Authentication failed",
+      "Username or password incorrect"
+    ]
+  },
+  {
+    "code": "FORBIDDEN",
+    "variants": [
+      "Access denied: Admin privileges required",
+      "Forbidden: Insufficient permissions",
+      "You do not have permission to access this resource"
+    ]
+  }
+]

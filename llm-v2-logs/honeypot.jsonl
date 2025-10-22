@@ -1,0 +1,152 @@
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.17.0.3:5000
+[33mPress CTRL+C to quit[0m
+Exception on / [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 1455, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 869, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 867, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 852, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/app/llm-honeypot-v2.py", line 425, in catch_all
+    attack_classification = classify_attack(endpoint, str(query_params), str(body_data))
+  File "/app/llm-honeypot-v2.py", line 154, in classify_attack
+    'complexity_score': calculate_complexity(payload),
+  File "/app/llm-honeypot-v2.py", line 141, in calculate_complexity
+    entropy = -sum((c/len(str(payload))) * (c/len(str(payload))).bit_length()
+  File "/app/llm-honeypot-v2.py", line 141, in <genexpr>
+    entropy = -sum((c/len(str(payload))) * (c/len(str(payload))).bit_length()
+AttributeError: 'float' object has no attribute 'bit_length'
+172.17.0.1 - - [22/Oct/2025 20:22:25] "[35m[1mGET / HTTP/1.1[0m" 500 -
+Exception on /api/users [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 1455, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 869, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 867, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 852, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/app/llm-honeypot-v2.py", line 425, in catch_all
+    attack_classification = classify_attack(endpoint, str(query_params), str(body_data))
+  File "/app/llm-honeypot-v2.py", line 154, in classify_attack
+    'complexity_score': calculate_complexity(payload),
+  File "/app/llm-honeypot-v2.py", line 141, in calculate_complexity
+    entropy = -sum((c/len(str(payload))) * (c/len(str(payload))).bit_length()
+  File "/app/llm-honeypot-v2.py", line 141, in <genexpr>
+    entropy = -sum((c/len(str(payload))) * (c/len(str(payload))).bit_length()
+AttributeError: 'float' object has no attribute 'bit_length'
+172.17.0.1 - - [22/Oct/2025 20:22:25] "[35m[1mGET /api/users HTTP/1.1[0m" 500 -
+Exception on /api/search [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 1455, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 869, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 867, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 852, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/app/llm-honeypot-v2.py", line 425, in catch_all
+    attack_classification = classify_attack(endpoint, str(query_params), str(body_data))
+  File "/app/llm-honeypot-v2.py", line 154, in classify_attack
+    'complexity_score': calculate_complexity(payload),
+  File "/app/llm-honeypot-v2.py", line 141, in calculate_complexity
+    entropy = -sum((c/len(str(payload))) * (c/len(str(payload))).bit_length()
+  File "/app/llm-honeypot-v2.py", line 141, in <genexpr>
+    entropy = -sum((c/len(str(payload))) * (c/len(str(payload))).bit_length()
+AttributeError: 'float' object has no attribute 'bit_length'
+172.17.0.1 - - [22/Oct/2025 20:22:26] "[35m[1mGET /api/search?q=1'%20OR%20'1'='1 HTTP/1.1[0m" 500 -
+Exception on /api/search [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 1455, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 869, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 867, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 852, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/app/llm-honeypot-v2.py", line 425, in catch_all
+    attack_classification = classify_attack(endpoint, str(query_params), str(body_data))
+  File "/app/llm-honeypot-v2.py", line 154, in classify_attack
+    'complexity_score': calculate_complexity(payload),
+  File "/app/llm-honeypot-v2.py", line 141, in calculate_complexity
+    entropy = -sum((c/len(str(payload))) * (c/len(str(payload))).bit_length()
+  File "/app/llm-honeypot-v2.py", line 141, in <genexpr>
+    entropy = -sum((c/len(str(payload))) * (c/len(str(payload))).bit_length()
+AttributeError: 'float' object has no attribute 'bit_length'
+172.17.0.1 - - [22/Oct/2025 20:22:26] "[35m[1mGET /api/search?q=1'%20UNION%20SELECT%20username,password,email%20FROM%20users%20WHERE%20id=1%20AND%20SUBSTRING(version(),1,1)='5' HTTP/1.1[0m" 500 -
+Exception on /api/analytics/reports [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 1455, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 869, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 867, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 852, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/app/llm-honeypot-v2.py", line 425, in catch_all
+    attack_classification = classify_attack(endpoint, str(query_params), str(body_data))
+  File "/app/llm-honeypot-v2.py", line 154, in classify_attack
+    'complexity_score': calculate_complexity(payload),
+  File "/app/llm-honeypot-v2.py", line 141, in calculate_complexity
+    entropy = -sum((c/len(str(payload))) * (c/len(str(payload))).bit_length()
+  File "/app/llm-honeypot-v2.py", line 141, in <genexpr>
+    entropy = -sum((c/len(str(payload))) * (c/len(str(payload))).bit_length()
+AttributeError: 'float' object has no attribute 'bit_length'
+172.17.0.1 - - [22/Oct/2025 20:22:26] "[35m[1mGET /api/analytics/reports HTTP/1.1[0m" 500 -
+Exception on /api/admin/settings [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 1455, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 869, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 867, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.9/site-packages/flask/app.py", line 852, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/app/llm-honeypot-v2.py", line 425, in catch_all
+    attack_classification = classify_attack(endpoint, str(query_params), str(body_data))
+  File "/app/llm-honeypot-v2.py", line 154, in classify_attack
+    'complexity_score': calculate_complexity(payload),
+  File "/app/llm-honeypot-v2.py", line 141, in calculate_complexity
+    entropy = -sum((c/len(str(payload))) * (c/len(str(payload))).bit_length()
+  File "/app/llm-honeypot-v2.py", line 141, in <genexpr>
+    entropy = -sum((c/len(str(payload))) * (c/len(str(payload))).bit_length()
+AttributeError: 'float' object has no attribute 'bit_length'
+172.17.0.1 - - [22/Oct/2025 20:22:28] "[35m[1mGET /api/admin/settings HTTP/1.1[0m" 500 -
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.17.0.3:5000
+[33mPress CTRL+C to quit[0m
+{"timestamp": "2025-10-22T20:28:48.565908", "source_ip": "172.17.0.1", "method": "GET", "path": "/", "query_string": "", "user_agent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.6899", "body": "", "response_type": "hybrid_generated", "response_mode": "rule", "llm_reason": "known_endpoint", "status_code": 200, "attack_detected": false, "attack_classification": {"attack_type": null, "payload_family": null, "complexity_score": 0.505, "mitre_attack": null}, "payload_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "llm_tokens": 0, "llm_cost": 0.0, "latency_ms": 0}
+172.17.0.1 - - [22/Oct/2025 20:28:48] "GET / HTTP/1.1" 200 -
+{"timestamp": "2025-10-22T20:28:48.598054", "source_ip": "172.17.0.1", "method": "GET", "path": "/api/users", "query_string": "", "user_agent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.6899", "body": "", "response_type": "hybrid_generated", "response_mode": "rule", "llm_reason": "known_endpoint", "status_code": 200, "attack_detected": false, "attack_classification": {"attack_type": null, "payload_family": null, "complexity_score": 0.514, "mitre_attack": null}, "payload_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "llm_tokens": 0, "llm_cost": 0.0, "latency_ms": 0}
+172.17.0.1 - - [22/Oct/2025 20:28:48] "GET /api/users HTTP/1.1" 200 -
+{"timestamp": "2025-10-22T20:28:51.369496", "source_ip": "172.17.0.1", "method": "GET", "path": "/api/search", "query_string": "q=test", "user_agent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.6899", "body": "", "response_type": "hybrid_generated", "response_mode": "llm", "llm_reason": "novel_request", "status_code": 200, "attack_detected": false, "attack_classification": {"attack_type": null, "payload_family": null, "complexity_score": 0.526, "mitre_attack": null}, "payload_hash": "bbb8e27d5fe80aed36c9b8f03486ad60604e7b72b9a749f381448ea5b2c22982", "llm_tokens": 85, "llm_cost": 0.00016999999999999999, "latency_ms": 1887}
+172.17.0.1 - - [22/Oct/2025 20:28:51] "GET /api/search?q=test HTTP/1.1" 200 -
+{"timestamp": "2025-10-22T20:29:20.635005", "source_ip": "172.17.0.1", "method": "GET", "path": "/", "query_string": "", "user_agent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.6899", "body": "", "response_type": "hybrid_generated", "response_mode": "rule", "llm_reason": "known_endpoint", "status_code": 200, "attack_detected": false, "attack_classification": {"attack_type": null, "payload_family": null, "complexity_score": 0.505, "mitre_attack": null}, "payload_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "llm_tokens": 0, "llm_cost": 0.0, "latency_ms": 0}
+172.17.0.1 - - [22/Oct/2025 20:29:20] "GET / HTTP/1.1" 200 -
+{"timestamp": "2025-10-22T20:29:20.822618", "source_ip": "172.17.0.1", "method": "GET", "path": "/api/users", "query_string": "", "user_agent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.6899", "body": "", "response_type": "hybrid_generated", "response_mode": "rule", "llm_reason": "known_endpoint", "status_code": 200, "attack_detected": false, "attack_classification": {"attack_type": null, "payload_family": null, "complexity_score": 0.514, "mitre_attack": null}, "payload_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "llm_tokens": 0, "llm_cost": 0.0, "latency_ms": 0}
+172.17.0.1 - - [22/Oct/2025 20:29:20] "GET /api/users HTTP/1.1" 200 -
+{"timestamp": "2025-10-22T20:29:20.961421", "source_ip": "172.17.0.1", "method": "GET", "path": "/api/search", "query_string": "q=1'%20OR%20'1'='1", "user_agent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.6899", "body": "", "response_type": "hybrid_generated", "response_mode": "rule", "llm_reason": "known_attack", "status_code": 404, "attack_detected": false, "attack_classification": {"attack_type": null, "payload_family": null, "complexity_score": 0.534, "mitre_attack": null}, "payload_hash": "b49f3c2257fe5f41c0b1b9dd95269ebb4eaae04b904983ecff0538bf00a84dfa", "llm_tokens": 0, "llm_cost": 0.0, "latency_ms": 0}
+172.17.0.1 - - [22/Oct/2025 20:29:20] "[33mGET /api/search?q=1'%20OR%20'1'='1 HTTP/1.1[0m" 404 -
+{"timestamp": "2025-10-22T20:29:23.716774", "source_ip": "172.17.0.1", "method": "GET", "path": "/api/search", "query_string": "q=1'%20UNION%20SELECT%20username,password,email,role,created_at%20FROM%20users%20WHERE%20id=1%20AND%20SUBSTRING(version(),1,1)='5'%20AND%20sleep(5)", "user_agent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.6899", "body": "", "response_type": "hybrid_generated", "response_mode": "llm", "llm_reason": "high_complexity", "status_code": 200, "attack_detected": true, "attack_classification": {"attack_type": "SQLi", "payload_family": "UNION-SELECT", "complexity_score": 0.9449999999999998, "mitre_attack": {"tactic": "TA0006", "technique": "T1190"}}, "payload_hash": "0c0d12b8ec33125ba077b016b51571d9f65b5fbd1a13d7fd62067274798e2528", "llm_tokens": 139, "llm_cost": 0.000278, "latency_ms": 2548}
+172.17.0.1 - - [22/Oct/2025 20:29:23] "GET /api/search?q=1'%20UNION%20SELECT%20username,password,email,role,created_at%20FROM%20users%20WHERE%20id=1%20AND%20SUBSTRING(version(),1,1)='5'%20AND%20sleep(5) HTTP/1.1" 200 -
+{"timestamp": "2025-10-22T20:29:23.957076", "source_ip": "172.17.0.1", "method": "GET", "path": "/api/admin/settings", "query_string": "", "user_agent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.6899", "body": "", "response_type": "hybrid_generated", "response_mode": "rule", "llm_reason": "known_pattern", "status_code": 403, "attack_detected": true, "attack_classification": {"attack_type": "auth-bypass", "payload_family": null, "complexity_score": 0.523, "mitre_attack": {"tactic": "TA0004", "technique": "T1078"}}, "payload_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "llm_tokens": 0, "llm_cost": 0.0, "latency_ms": 0}
+172.17.0.1 - - [22/Oct/2025 20:29:23] "[31m[1mGET /api/admin/settings HTTP/1.1[0m" 403 -
+{"timestamp": "2025-10-22T20:29:26.446664", "source_ip": "172.17.0.1", "method": "GET", "path": "/api/v2/analytics/dashboard", "query_string": "", "user_agent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.6899", "body": "", "response_type": "hybrid_generated", "response_mode": "llm", "llm_reason": "novel_request", "status_code": 200, "attack_detected": false, "attack_classification": {"attack_type": null, "payload_family": null, "complexity_score": 0.5309999999999999, "mitre_attack": null}, "payload_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "llm_tokens": 154, "llm_cost": 0.000308, "latency_ms": 2261}
+172.17.0.1 - - [22/Oct/2025 20:29:26] "GET /api/v2/analytics/dashboard HTTP/1.1" 200 -
+{"timestamp": "2025-10-22T20:29:26.688125", "source_ip": "172.17.0.1", "method": "POST", "path": "/api/login", "query_string": "", "user_agent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.6899", "body": "{\r\n    \"password\":  \"test\",\r\n    \"username\":  \"admin\"\r\n}", "response_type": "hybrid_generated", "response_mode": "rule", "llm_reason": "known_pattern", "status_code": 401, "attack_detected": true, "attack_classification": {"attack_type": "auth-brute", "payload_family": null, "complexity_score": 0.5549999999999999, "mitre_attack": {"tactic": "TA0006", "technique": "T1110"}}, "payload_hash": "ae7ac32160ef05f73236faa08d24c3ead436fdb9086a855cc8c044160f1382a3", "llm_tokens": 0, "llm_cost": 0.0, "latency_ms": 0}
+172.17.0.1 - - [22/Oct/2025 20:29:26] "[31m[1mPOST /api/login HTTP/1.1[0m" 401 -
+{"timestamp": "2025-10-22T20:29:31.802897", "source_ip": "172.17.0.1", "method": "GET", "path": "/api/reports/quarterly", "query_string": "", "user_agent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.6899", "body": "", "response_type": "hybrid_generated", "response_mode": "llm", "llm_reason": "novel_request", "status_code": 200, "attack_detected": false, "attack_classification": {"attack_type": null, "payload_family": null, "complexity_score": 0.526, "mitre_attack": null}, "payload_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "llm_tokens": 230, "llm_cost": 0.00045999999999999996, "latency_ms": 1812}
+172.17.0.1 - - [22/Oct/2025 20:29:31] "GET /api/reports/quarterly HTTP/1.1" 200 -

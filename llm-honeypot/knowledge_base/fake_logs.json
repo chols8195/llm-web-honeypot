@@ -1,0 +1,32 @@
+[
+  {
+    "timestamp": "2024-10-15 14:23:45",
+    "level": "ERROR",
+    "message": "MySQL connection timeout after 30s",
+    "source": "/var/www/api/database.php:127"
+  },
+  {
+    "timestamp": "2024-10-15 15:01:12",
+    "level": "WARNING", 
+    "message": "Failed login attempt for user 'admin' from 192.168.1.100",
+    "source": "/var/www/api/auth.php:45"
+  },
+  {
+    "timestamp": "2024-10-16 09:15:33",
+    "level": "ERROR",
+    "message": "SQL syntax error near 'UNION SELECT' in query",
+    "source": "/var/www/api/search.php:89"
+  },
+  {
+    "timestamp": "2024-10-16 11:42:19",
+    "level": "INFO",
+    "message": "File uploaded: avatar_12345.jpg (245KB)",
+    "source": "/var/www/api/upload.php:156"
+  },
+  {
+    "timestamp": "2024-10-17 08:30:05",
+    "level": "ERROR",
+    "message": "Directory traversal attempt blocked: ../../etc/passwd",
+    "source": "/var/www/api/router.php:234"
+  }
+]

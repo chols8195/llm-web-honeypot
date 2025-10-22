@@ -1,0 +1,14 @@
+[
+  {
+    "file": "/etc/nginx/nginx.conf",
+    "content": "worker_processes 4;\nevents { worker_connections 1024; }\nhttp { include /etc/nginx/sites-enabled/*; }"
+  },
+  {
+    "file": "/var/www/api/config/database.php",
+    "content": "<?php\ndefine('DB_HOST', 'localhost');\ndefine('DB_NAME', 'api_production');\ndefine('DB_USER', 'api_user');\n"
+  },
+  {
+    "file": "/var/www/api/.env",
+    "content": "APP_ENV=production\nDB_CONNECTION=mysql\nDB_HOST=127.0.0.1\nDB_PORT=3306\nDB_DATABASE=api_db\n"
+  }
+]
