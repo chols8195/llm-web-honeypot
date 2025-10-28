@@ -1,3 +1,4 @@
+# shared/compare_all_honeypots.py
 import json
 import sys
 
