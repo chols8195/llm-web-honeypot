@@ -244,3 +244,20 @@ AttributeError: 'float' object has no attribute 'bit_length'
 172.17.0.1 - - [23/Oct/2025 20:26:38] "GET /api/analytics/dashboard HTTP/1.1" 200 -
 {"timestamp": "2025-10-23T20:26:38.064260", "source_ip": "172.17.0.1", "method": "GET", "path": "/api/reports/quarterly", "query_string": "", "user_agent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.6899", "body": "", "response_type": "hybrid_generated", "response_mode": "llm", "llm_reason": "novel_request", "status_code": 200, "attack_detected": false, "attack_classification": {"attack_type": null, "payload_family": null, "complexity_score": 0.526, "mitre_attack": null}, "payload_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "llm_tokens": 0, "llm_cost": 0.0, "latency_ms": 0}
 172.17.0.1 - - [23/Oct/2025 20:26:38] "GET /api/reports/quarterly HTTP/1.1" 200 -
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.17.0.3:5000
+[33mPress CTRL+C to quit[0m
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.17.0.3:5000
+[33mPress CTRL+C to quit[0m
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.17.0.3:5000
+[33mPress CTRL+C to quit[0m
+{"timestamp": "2025-10-28T16:44:20.687423", "source_ip": "172.17.0.1", "method": "GET", "path": "/", "query_string": "", "user_agent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.6899", "body": "", "response_type": "hybrid_generated", "response_mode": "rule", "llm_reason": "known_endpoint", "status_code": 200, "attack_detected": false, "attack_classification": {"attack_type": null, "payload_family": null, "complexity_score": 0.508, "mitre_attack": null}, "payload_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "llm_tokens": 0, "llm_cost": 0.0, "latency_ms": 0}
+172.17.0.1 - - [28/Oct/2025 16:44:20] "GET / HTTP/1.1" 200 -
