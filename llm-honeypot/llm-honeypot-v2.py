@@ -29,27 +29,31 @@ logging.basicConfig(
     ]
 )
 
+
 # Load knowledge base
-KB_DIR = '/app/knowledge_base' if os.path.exists('/app/knowledge_base') else './knowledge_base'
+KNOWLEDGE_BASE = {}
 
 def load_knowledge_base():
-    """Load all knowledge base files"""
-    kb = {}
-    try:
-        with open(f'{KB_DIR}/fake_logs.json', 'r') as f:
-            kb['logs'] = json.load(f)
-        with open(f'{KB_DIR}/fake_configs.json', 'r') as f:
-            kb['configs'] = json.load(f)
-        with open(f'{KB_DIR}/fake_db_dumps.json', 'r') as f:
-            kb['db_dumps'] = json.load(f)
-        with open(f'{KB_DIR}/fake_errors.json', 'r') as f:
-            kb['errors'] = json.load(f)
-    except Exception as e:
-        logging.error(f"Failed to load knowledge base: {e}")
-        kb = {'logs': [], 'configs': [], 'db_dumps': [], 'errors': []}
-    return kb
+    """Load fake system artifacts"""
+    kb_path = 'knowledge_base/'
+    files = {
+        'logs': 'fake_logs.json',
+        'configs': 'fake_configs.json', 
+        'db_dumps': 'fake_db_dumps.json',
+        'errors': 'fake_errors.json'
+    }
+    
+    for key, filename in files.items():
+        try:
+            with open(os.path.join(kb_path, filename), 'r') as f:
+                KNOWLEDGE_BASE[key] = json.load(f)
+            print(f"✓ Loaded {filename}")
+        except Exception as e:
+            print(f"✗ Failed to load {filename}: {e}")
+            KNOWLEDGE_BASE[key] = []
 
-KNOWLEDGE_BASE = load_knowledge_base()
+# Load at startup
+load_knowledge_base()
 sessions = {}
 response_cache = {}
 fake_sessions = {}  # For tracking "logged in" attackers

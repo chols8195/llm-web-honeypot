@@ -1,4 +1,4 @@
-# sahred/automated_attacks.py
+# shared/automated_attacks.py
 import requests
 import json
 import time
@@ -240,7 +240,8 @@ if __name__ == '__main__':
     stats = analyze_results(results, base_url)
     
     # Save results
-    output_file = f"attack_results_{int(time.time())}.json"
+    os.makedirs('attack_results', exist_ok=True)
+    output_file = f"attack_results/attack_results_{int(time.time())}.json"
     with open(output_file, 'w') as f:
         json.dump({
             'target': base_url,

