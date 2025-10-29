@@ -265,6 +265,7 @@ def catch_all(path):
     }), 404
 
 if __name__ == '__main__':
-    print(f"Starting API honeypot on http://0.0.0.0:5000")
+    print(f"Starting API honeypot on http://0.0.0.0:")
     print(f"Logs: {LOG_DIR}/honeypot.jsonl")
     app.run(host='0.0.0.0', port=5000, debug=False)
+    
