@@ -4,6 +4,7 @@ import json
 import time
 from datetime import datetime
 import os
+import platform
 
 def run_zap_baseline_scan(target_url, honeypot_name):
     """Run OWASP ZAP baseline scan using Docker"""
@@ -14,35 +15,42 @@ def run_zap_baseline_scan(target_url, honeypot_name):
     print(f"{'='*70}\n")
     
     # Create reports directory
-    os.makedirs('zap_reports', exist_ok=True)
+    reports_dir = os.path.abspath('zap_reports')
+    os.makedirs(reports_dir, exist_ok=True)
     
     timestamp = int(time.time())
-    report_html = f"zap_reports/zap_report_{honeypot_name}_{timestamp}.html"
-    report_json = f"zap_reports/zap_report_{honeypot_name}_{timestamp}.json"
-    report_md = f"zap_reports/zap_report_{honeypot_name}_{timestamp}.md"
     
     print(f"Running ZAP baseline scan...")
     print(f"This will take 2-5 minutes...\n")
     
     start_time = time.time()
     
-    # ZAP baseline scan via Docker
-    # Use host.docker.internal to access host machine from Docker
+    # Use host.docker.internal to access host from Docker
     target = target_url.replace('localhost', 'host.docker.internal')
     
+    # Windows path conversion for Docker
+    if platform.system() == 'Windows':
+        # Convert C:\Users\... to /c/Users/... for Docker
+        docker_path = reports_dir.replace('\\', '/').replace('C:', '/c').replace('c:', '/c')
+    else:
+        docker_path = reports_dir
+
     cmd = [
         'docker', 'run', '--rm',
-        '-v', f'{os.getcwd()}/zap_reports:/zap/wrk:rw',
-        '--network', 'host',
+        '-v', f'{docker_path}:/zap/wrk:rw',
+        '--add-host', 'host.docker.internal:host-gateway',
         'ghcr.io/zaproxy/zaproxy:stable',
         'zap-baseline.py',
         '-t', target,
-        '-J', f'/zap/wrk/report_{honeypot_name}_{timestamp}.json',
-        '-r', f'/zap/wrk/report_{honeypot_name}_{timestamp}.html',
-        '-m', f'/zap/wrk/report_{honeypot_name}_{timestamp}.md'
+        '-J', f'report_{honeypot_name}_{timestamp}.json',
+        '-r', f'report_{honeypot_name}_{timestamp}.html',
+        '-w', f'report_{honeypot_name}_{timestamp}.md',
+        '-I'  # Ignore warnings for now
     ]
     
     try:
+        print(f"Command: {' '.join(cmd)}\n")
+        
         result = subprocess.run(
             cmd,
             capture_output=True,
@@ -57,29 +65,36 @@ def run_zap_baseline_scan(target_url, honeypot_name):
         print(f"Exit code: {result.returncode}")
         print(f"{'='*70}\n")
         
-        # ZAP returns exit codes based on findings:
-        # 0 = no alerts, 1 = warnings, 2 = high alerts
-        if result.returncode == 0:
-            print("✓ No security issues found")
-        elif result.returncode == 1:
-            print("⚠ Warning level alerts found")
-        elif result.returncode == 2:
-            print("🚨 High risk alerts found")
+        # Show output
+        if result.stdout:
+            print(f"ZAP Output:\n{result.stdout}")
+        if result.stderr:
+            print(f"ZAP Errors:\n{result.stderr}")
         
-        print(f"\nZAP Output:")
-        print(result.stdout)
+        # Check for report files
+        json_file = os.path.join(reports_dir, f'report_{honeypot_name}_{timestamp}.json')
+        html_file = os.path.join(reports_dir, f'report_{honeypot_name}_{timestamp}.html')
         
-        # Try to parse JSON results if available
-        json_path = f"zap_reports/report_{honeypot_name}_{timestamp}.json"
-        if os.path.exists(json_path):
-            return parse_zap_results(json_path, honeypot_name, elapsed)
+        if os.path.exists(json_file):
+            print(f"\n✓ Reports created:")
+            print(f"  - {json_file}")
+            print(f"  - {html_file}")
+            return parse_zap_results(json_file, honeypot_name, elapsed)
         else:
+            print(f"\n✗ Report files not created")
+            print(f"  Expected: {json_file}")
+            
+            # List what's actually in the directory
+            print(f"\nFiles in zap_reports:")
+            for f in os.listdir(reports_dir):
+                print(f"  - {f}")
+            
             return {
                 'honeypot': honeypot_name,
                 'url': target_url,
                 'elapsed_time': elapsed,
                 'exit_code': result.returncode,
-                'report_html': report_html
+                'error': 'Report files not created'
             }
     
     except subprocess.TimeoutExpired:
@@ -87,6 +102,8 @@ def run_zap_baseline_scan(target_url, honeypot_name):
         return None
     except Exception as e:
         print(f"ERROR: {e}")
+        import traceback
+        traceback.print_exc()
         return None
 
 def parse_zap_results(json_path, honeypot_name, elapsed):
