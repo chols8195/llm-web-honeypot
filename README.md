@@ -121,12 +121,12 @@ Invoke-RestMethod -Uri "http://localhost:5000/api/login" `
   -Body '{"username":"admin","password":"password123"}'
 ```
 
-### Run Automated Attack Suite
+### Run Tests Example
 
 **macOS/Linux:**
 ```bash
 cd shared
-python ./run_all_tests.py
+python run_all_tests.py
 ```
 
 **Windows (PowerShell):**
@@ -135,7 +135,7 @@ cd shared
 python run_all_tests.py
 ```
 
-### Run Comparison Tests
+### Run Comparison Tests Example
 
 Compare all three honeypot versions:
 
@@ -159,7 +159,7 @@ python compare_all_honeypots.py `
 
 ## Viewing Results
 
-### View Logs
+### View Logs Example
 
 **macOS/Linux:**
 ```bash
@@ -188,18 +188,18 @@ Get-Content llm-honeypot\logs\honeypot.jsonl
 (Get-Content llm-honeypot\logs\honeypot.jsonl | Select-String '"attack_detected":true').Count
 ```
 
-### Analyze Attack Patterns
+### Analyze Attack Patterns Example
 
 **macOS/Linux:**
 ```bash
 cd shared
-python analyze_honeypot.py ../llm-honeypot/logs/honeypot.jsonl
+python analyze_hybrid.py ../llm-v2-logs/honeypot.jsonl
 ```
 
 **Windows:**
 ```powershell
 cd shared
-python analyze_honeypot.py ..\llm-honeypot\logs\honeypot.jsonl
+python analyze_hybrid.py ..\llm-v2-logs\honeypot.jsonl
 ```
 
 
