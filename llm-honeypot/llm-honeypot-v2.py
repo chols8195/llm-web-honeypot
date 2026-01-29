@@ -83,6 +83,28 @@ class ImprovedHoneypot:
                     'timestamp': None # Set at runtime
                 }
             },
+            'path_traversal_blocked': {
+                'status_code': 403,
+                'body': {
+                    'success': False, 
+                    'error': 'Access denied: Directory traversal detected',
+                    'code': 'PATH_TRAVERSAL_BLOCKED',
+                    'details': 'Attempted access to restricted filesystem path',
+                    'requested_path': None, 
+                    'normalized_path': None,
+                    'security_note': 'All file access attempts are logged and monitored'
+                }
+            },
+            'file_not_found': {
+                'status_code': 404,
+                'body': {
+                    'success': False, 
+                    'error': 'File not found',
+                    'code': 'FILE_NOT_FOUND',
+                    'path': None,
+                    'suggestion': 'Check the file path and try again'
+                }
+            }
         }
     
     def calculate_complexity(self, request_data):
