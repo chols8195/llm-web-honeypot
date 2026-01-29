@@ -116,21 +116,21 @@ test_data/real/
 !test_data/example/
 .venv/
 * 2.*
-freephdlabor/
-# conda installers / environments
+# environments / installers
 Miniconda3-*.sh
 Anaconda3-*.sh
-miniconda*/
-anaconda*/
-.env/
+.env
 venv/
 
-# logs / outputs
-llm-v2-logs/
+# python junk
+__pycache__/
+*.pyc
+
+# logs / runtime data
+*.log
 *.jsonl
+llm-v2-logs/
 
-# embedded repo
+# embedded repos
 glastopf/
-
 freephdlabor/
-
