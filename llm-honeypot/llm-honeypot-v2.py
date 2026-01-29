@@ -109,6 +109,27 @@ class ImprovedHoneypot:
         if xss_detected:
             return 0.15 # returns a low complexity if found in template 
         
+        # Path traversal patterns - use templates since it's common 
+        path_traversal_patterns = [
+            '../', '..\\', '%2e%2e/', '%2e%2e%5c',  # Basic and encoded traversal
+            'etc/passwd', 'etc/shadow', 'etc/hosts',  # Common Linux targets
+            'var/www', 'var/log', 'home/', 'root/',  # Linux paths
+            'proc/version', 'proc/cpuinfo', 'proc/self',  # Proc filesystem
+            'windows/system32', 'windows\\system32',  # Windows paths
+            'boot.ini', 'win.ini',  # Windows config files
+            '.bash_history', '.ssh/authorized_keys', '.ssh/id_rsa',  # SSH/shell
+            'config.php', 'wp-config.php', 'database.yml',  # App configs
+        ]
+        
+        is_path_traversal = False 
+        for pattern in path_traversal_patterns:
+            if pattern in payload or pattern in path:
+                is_path_traversal = True 
+                break
+        
+        if is_path_traversal:
+            return 0.12 # Return low complexity 
+        
         # Known simple patterns - use templates
         simple_patterns = [
             "' or '1'='1", "admin' --", "1=1", "../etc/passwd",
