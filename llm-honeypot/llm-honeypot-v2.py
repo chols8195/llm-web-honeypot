@@ -508,6 +508,35 @@ Generate the response now. Be specific using the system data provided. NO explan
                         return response, metadata
                 except:
                     pass # Fall through to blocked response
+            
+            # If not authenticated or file not found, block access
+            # Normalize the path to show what they were trying 
+            normalized_path = full_request.replace('../', '/').replace('..\\', '\\')
+            
+            response = {
+                'status_code': 403, 
+                'body': {
+                    'success': False, 
+                    'error': 'Access denied: Directory traversal detected',
+                    'code': 'PATH_TRAVERSAL_BLOCKED',
+                    'details': 'Attempted access to restricted filesystem path',
+                    'requested_path': full_request[:100], # Limit length 
+                    'normalized_path': normalized_path[:100],
+                    'security_note': 'All file access attempts are logged and monitored',
+                    'hint': 'Authentication required for file access' if not session.system_state.get('authenticated') else 'Insufficient permissions'
+                }
+            }
+            
+            metadata = {
+                'template_used': 'path_traversal_blocked',
+                'response_time_ms': random.uniform(90, 150),
+                'attack_type': 'path_traversal',
+                'authenticated': session.system_state.get('authenticated', False),
+                'file_requested': matched_file if matched_file else 'unknown'
+            }
+            
+            time.sleep(metadata['response_time_ms'] / 1000)
+            return response, metadata
         
         # Choose appropriate template
         if "' or" in payload or "union" in payload or "1=1" in payload:
