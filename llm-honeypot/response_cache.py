@@ -16,6 +16,8 @@ class ResponseCache:
     def __init__(self, ttl_minutes: int = 60):
         self.cache = {}
         self.ttl = timedelta(minutes=ttl_minutes)
+        self.ttl_seconds = ttl_minutes * 60 
+        self.stats = {'hits': 0, 'misses': 0}
         
     def _make_key(self, session_id: str, request_path: str, 
                   payload: str, method: str) -> str:
@@ -33,12 +35,14 @@ class ResponseCache:
             age = datetime.now() - cached['timestamp']
             
             if age < self.ttl:
+                self.stats['hits'] += 1
                 cached['metadata']['cache_hit'] = True
                 return cached
             else:
                 # Expired - remove it
                 del self.cache[key]
         
+        self.stats['misses'] += 1
         return None
     
     def set(self, session_id: str, request_path: str, payload: str, 
@@ -53,7 +57,22 @@ class ResponseCache:
     
     def get_stats(self) -> Dict:
         """Get cache statistics"""
+        from datetime import datetime 
+        
+        # Calculate memory w/o datetime objects causing serialization issues
+        cache_copy = {}
+        for key, value in self.cache.items():
+            cache_copy[key] = {
+                'response': value['response'],
+                'metadata': value['metadata'],
+                'timestamp': value['timestamp'].isoformat() if isinstance(value['timestamp'], datetime) else str(value['timestamp'])
+            }
+        
         return {
-            'total_cached': len(self.cache),
-            'memory_kb': len(json.dumps(self.cache)) / 1024
+            'total_entries': len(self.cache),
+            'hit_rate': f"{self.stats['hits'] / max(self.stats['hits'] + self.stats['misses'], 1) * 100:.2f}%",
+            'hits': self.stats['hits'],
+            'misses': self.stats['misses'],
+            'memory_kb': len(str(cache_copy)) / 1024,
+            'ttl_minutes': self.ttl_seconds / 60
         }
