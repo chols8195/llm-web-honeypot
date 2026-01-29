@@ -8,6 +8,7 @@ import random
 import hashlib
 import os
 from dotenv import load_dotenv
+from pathlib import Path
 
 # Import our new modules
 from session_manager import SessionManager, SessionState
@@ -27,9 +28,12 @@ response_cache = ResponseCache(ttl_minutes=60)
 persona_validator = PersonaValidator()
 
 # Setup logging
-os.makedirs('logs/llm-v2-logs', exist_ok=True)
+SCRIPT_DIR = Path(__file__).parent.absolute()
+LOG_DIR = SCRIPT_DIR / 'logs' / 'llm-v2-logs'
+os.makedirs(LOG_DIR, exist_ok=True)
+
 logging.basicConfig(
-    filename='logs/llm-v2-logs/honeypot.jsonl',
+    filename=str(LOG_DIR / 'honeypot.jsonl'),
     level=logging.INFO,
     format='%(message)s'
 )
@@ -65,13 +69,45 @@ class ImprovedHoneypot:
                     'success': False,
                     'error': 'Access denied: Admin privileges required'
                 }
-            }
+            }, 
+            'xss_detected': {
+                'status_code': 400, 
+                'body': {
+                    'success': False, 
+                    'error': 'Invalid input: HTML tags not allowed', 
+                    'code': 'XSS_DETECTED',
+                    'details': 'Potentially malicious content detected and blocked',
+                    'sanitized_input': '{sanitized}',
+                    'blocked_tags': [], # Populated dynamically
+                    'security_policy': 'Content-Security-Policy: default-src \'self\'',
+                    'timestamp': None # Set at runtime
+                }
+            },
         }
     
     def calculate_complexity(self, request_data):
         """Determine if request needs LLM or template response"""
         payload = str(request_data.get('payload', '')).lower()
         path = request_data['path'].lower()
+        
+        # XSS patterns - common so use template 
+        xss_pattern = [
+            '<script', '</script>', 'javascript:', 'onerror=', 'onload=',
+            '<img', '<svg', '<iframe', '<object', '<embed',
+            'alert(', 'prompt(', 'confirm(', 'document.cookie',
+            '<body', 'onmouseover=', 'onclick=', '<input',
+            'eval(', '<style', '<link'
+        ]
+        
+        # Check if any XSS pattern exists in payload or path 
+        xss_detected = False 
+        for pattern in xss_pattern:
+            if pattern in payload or pattern in path:
+                xss_detected = True 
+                break 
+        
+        if xss_detected:
+            return 0.15 # returns a low complexity if found in template 
         
         # Known simple patterns - use templates
         simple_patterns = [
@@ -273,7 +309,82 @@ Generate the response now. Be specific using the system data provided. NO explan
     def _handle_with_template(self, request_data, session, complexity):
         """Handle request with predefined template"""
         payload = str(request_data.get('payload', '')).lower()
+        path = request_data['path'].lower()
         
+        # HTML tags that indicate XSS
+        xss_tags = [
+            '<script', '</script>', '<img', '<svg', '<iframe', 
+            '<object', '<embed', '<body', '<input', '<style', '<link'
+        ]
+        
+        # List of JavaScript event handlers 
+        xss_events = [
+            'onerror=', 'onload=', 'onclick=', 'onmouseover=', 
+            'onmouseout=', 'onfocus=', 'onblur='
+        ]
+        
+        # List of dangerous JavaScript patterns 
+        xss_js = [
+            'javascript:', 'alert(', 'prompt(', 'confirm(',
+            'eval(', 'document.cookie', 'window.location'
+        ]
+        
+        # Check if XSS attempt detected 
+        detected_tags = []
+        is_xss = False
+        
+        # Check tags
+        for tag in xss_tags:
+            if tag in payload or tag in path:
+                is_xss = True 
+                detected_tags.append(tag.replace('<', '').replace('>', ''))
+                
+        # Check event handlers 
+        for event in xss_events:
+            if event in payload or event in path:
+                is_xss = True 
+                detected_tags.append(event.replace('=', ''))
+        
+        # Check JavaScript patterns 
+        for js in xss_js:
+            if js in payload or js in path:
+                is_xss = True 
+                detected_tags.append(js.replace('(', '').replace(')', ''))
+                
+        # If XSS detected, use XSS template 
+        if is_xss:
+            # Sanitize the input by replacing HTML characters 
+            sanitized = str(request_data.get('payload', ''))
+            sanitized = sanitized.replace('<', '&lt;')
+            sanitized = sanitized.replace('>', '&gt;')
+            sanitized = sanitized.replace('"', '&quot;')
+            sanitized = sanitized.replace("'", '&#x27;')
+            sanitized = sanitized.replace('/', '&#x2F;')
+            
+            response = {
+                'status_code': 400,
+                'body': {
+                    'success': False, 
+                    'error': 'Invalid input: HTML tags not allowed',
+                    'code': 'XSS_DETECTED',
+                    'details': 'Potentially malicious content detected and blocked',
+                    'sanitized_input': sanitized[:200], # Limit length
+                    'blocked_tags': list(set(detected_tags)), # Remove duplicates
+                    'security_policy': 'Content-Security-Policy: default-src \'self\'',
+                    'timestamp': datetime.now().isoformat()
+                }
+            }
+            
+            metadata = {
+                'template_used': 'xss_detected',
+                'response_time_ms': random.uniform(80, 140),
+                'attack_type': 'xss',
+                'tags_detected': len(detected_tags) 
+            }
+            
+            time.sleep(metadata['response_time_ms'] / 1000)
+            return response, metadata
+
         # Choose appropriate template
         if "' or" in payload or "union" in payload or "1=1" in payload:
             template_key = 'sql_injection_basic'

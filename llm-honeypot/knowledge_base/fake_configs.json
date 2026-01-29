@@ -12,3 +12,5 @@
     "content": "APP_ENV=production\nDB_CONNECTION=mysql\nDB_HOST=127.0.0.1\nDB_PORT=3306\nDB_DATABASE=api_db\n"
   }
 ]
+
+

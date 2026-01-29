@@ -1,0 +1,7 @@
+how could we make it more believable and it's a mater f testing 
+ 
+how believeable is this?
+- how can we make it seem like it is from a real website 
+- how can we test this so how can we send a payload
+- generate a readme for how he can run this later
+- for how he can use api keys and how to set that up 

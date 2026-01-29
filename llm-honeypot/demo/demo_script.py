@@ -265,7 +265,7 @@ class HoneypotDemo:
         for result in self.results:
             print(f"  • {result['scenario']}: {'✓ PASS' if result.get('state_tracked') or result.get('efficient') or result.get('identical') or result.get('maintained') or result.get('has_specific_data') else '✓'}")
         
-        print("\n🎓 Key Takeaways for Professor:")
+        print("\nKey Takeaways for Professor:")
         print("  1. Hybrid design saves 92% cost vs pure LLM")
         print("  2. Session state = 2x longer attacker engagement")
         print("  3. Knowledge base = believable specific details")
