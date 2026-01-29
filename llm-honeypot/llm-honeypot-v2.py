@@ -444,6 +444,70 @@ Generate the response now. Be specific using the system data provided. NO explan
                 is_path_traversal = True 
                 break 
         
+        if is_path_traversal: 
+            # Extract what file they're trying to access 
+            full_request = payload + ' ' + path 
+            
+            # Map common paths to fake files 
+            file_mapping = {
+                'etc/passwd': 'etc_passwd',
+                '/etc/passwd': 'etc_passwd',
+                'etc/shadow': 'etc_shadow',
+                '/etc/shadow': 'etc_shadow',
+                'etc/hosts': 'etc_hosts',
+                '/etc/hosts': 'etc_hosts',
+                'var/www/config.php': 'var_www_config_php',
+                'config.php': 'var_www_config_php',
+                'var/log/apache2/access.log': 'var_log_apache_access_log',
+                'var/log/mysql/error.log': 'var_log_mysql_error_log',
+                '.bash_history': 'home_admin_bash_history',
+                'bash_history': 'home_admin_bash_history',
+                '.ssh/authorized_keys': 'ssh_authorized_keys',
+                'authorized_keys': 'ssh_authorized_keys',
+                'proc/version': 'proc_version',
+                '/proc/version': 'proc_version',
+                'proc/cpuinfo': 'proc_cpuinfo',
+                '/proc/cpuinfo': 'proc_cpuinfo'
+            }
+            
+            # Check if the attacker is trying to access a file we have 
+            matched_file = None 
+            for path_pattern, file_key in file_mapping.items():
+                if path_pattern in full_request:
+                    matched_file = file_key
+                    break 
+            
+            # If authenticated, serve the fake file 
+            if matched_file and session.system_state.get('authenticated', False):
+                # Load the fake file from knowledge base 
+                import json 
+                import os
+                from pathlib import Path 
+                
+                kb_path = Path(__file__).parent / 'knowledge_base' / 'fake_system_files.json'
+                try:
+                    with open(kb_path, 'r') as f:
+                        fake_files = json.load(f)
+                    
+                    if matched_file in fake_files:
+                        # Serve the file content 
+                        response = {
+                            'status_code': 200,
+                            'body': fake_files[matched_file] # Raw file content, not JSON
+                        }
+                        
+                        metadata = {
+                            'template_used': 'path_traversal_allowed',
+                            'response_time_ms': random.uniform(150, 250),
+                            'attack_type': 'path_traversal',
+                            'file_served': matched_file,
+                            'authenticated': True
+                        }
+                        
+                        time.sleep(metadata['response_time_ms'] / 1000)
+                        return response, metadata
+                except:
+                    pass # Fall through to blocked response
         
         # Choose appropriate template
         if "' or" in payload or "union" in payload or "1=1" in payload:
