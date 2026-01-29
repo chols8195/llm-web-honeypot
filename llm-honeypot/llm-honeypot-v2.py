@@ -428,6 +428,23 @@ Generate the response now. Be specific using the system data provided. NO explan
             time.sleep(metadata['response_time_ms'] / 1000)
             return response, metadata
 
+        # Path traversal detection
+        path_traversal_indicators = [
+            '../', '..\\', '%2e%2e/', '%2e%2e%5c',
+            'etc/passwd', 'etc/shadow', 'etc/hosts',
+            'var/www', 'var/log', 'home/', 'root/',
+            'proc/version', 'proc/cpuinfo',
+            '.bash_history', '.ssh/', 'config.php',
+            'wp-config.php', 'database.yml'
+        ]
+        
+        is_path_traversal = False 
+        for indicator in path_traversal_indicators:
+            if indicator in payload or indicator in path:
+                is_path_traversal = True 
+                break 
+        
+        
         # Choose appropriate template
         if "' or" in payload or "union" in payload or "1=1" in payload:
             template_key = 'sql_injection_basic'
