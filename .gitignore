@@ -117,4 +117,17 @@ test_data/real/
 .venv/
 * 2.*
 freephdlabor/
+# conda installers / environments
+Miniconda3-*.sh
+Anaconda3-*.sh
+miniconda*/
+anaconda*/
+.env/
+venv/
+
+# logs / outputs
+llm-v2-logs/
+*.jsonl
+
+# embedded repo
 glastopf/
