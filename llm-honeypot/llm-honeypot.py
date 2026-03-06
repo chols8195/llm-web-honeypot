@@ -283,6 +283,6 @@ def catch_all(path):
     return jsonify(response_data), status_code
 
 if __name__ == '__main__':
-    print(f"Starting LLM-augmented honeypot on http://0.0.0.0:5000")
+    print(f"Starting LLM-augmented honeypot on http://0.0.0.0:8080")
     print(f"Logs: {LOG_DIR}/honeypot.jsonl")
-    app.run(host='0.0.0.0', port=5000, debug=False)
+    app.run(host='0.0.0.0', port=8080, debug=False)
