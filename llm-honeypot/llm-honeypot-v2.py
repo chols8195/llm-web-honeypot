@@ -41,6 +41,149 @@ logging.basicConfig(
 # OpenAI client
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
+# ============================================================
+# COMMAND INJECTION - Fake system command outputs
+# ============================================================
+COMMAND_OUTPUTS = {
+    'whoami':       'www-data',
+    'id':           'uid=33(www-data) gid=33(www-data) groups=33(www-data)',
+    'hostname':     'prod-api-01',
+    'uname':        'Linux prod-api-01 5.15.0-91-generic #101-Ubuntu SMP x86_64 GNU/Linux',
+    'uname -a':     'Linux prod-api-01 5.15.0-91-generic #101-Ubuntu SMP Tue Nov 14 13:30:08 UTC 2023 x86_64 x86_64 x86_64 GNU/Linux',
+    'pwd':          '/var/www/html',
+    'cat /etc/passwd': (
+        'root:x:0:0:root:/root:/bin/bash\n'
+        'daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin\n'
+        'www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin\n'
+        'mysql:x:112:117:MySQL Server,,,:/var/lib/mysql:/bin/false\n'
+        'ubuntu:x:1000:1000:Ubuntu,,,:/home/ubuntu:/bin/bash'
+    ),
+    'cat .env': (
+        'APP_ENV=production\nAPP_DEBUG=false\nAPP_KEY=base64:kJ3mNpQ7rS1vX9zB2dF5hL8nP0qT4wY6\n'
+        'DB_CONNECTION=mysql\nDB_HOST=127.0.0.1\nDB_PORT=3306\nDB_DATABASE=api_production\n'
+        'DB_USERNAME=api_user\nDB_PASSWORD=P@ssw0rd123!\n'
+        'API_KEY=sk_live_a1b2c3d4e5f6g7h8i9j0\n'
+        'AWS_ACCESS_KEY_ID=AKIA1234567890EXAMPLE\nAWS_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY\n'
+        'OPENAI_API_KEY=sk-proj-XXXXXXXXXXXXXXXXXXXX'
+    ),
+    'cat config.php': (
+        '<?php\n'
+        "define('DB_HOST', '127.0.0.1');\n"
+        "define('DB_NAME', 'api_production');\n"
+        "define('DB_USER', 'api_user');\n"
+        "define('DB_PASS', 'P@ssw0rd123!');\n"
+        "define('SECRET_KEY', 'f3a9c2e1d7b4k8m0');\n"
+        '?>'
+    ),
+    'ls -la': (
+        'total 96\ndrwxr-xr-x 8 www-data www-data 4096 Oct 23 09:14 .\n'
+        'drwxr-xr-x 4 root     root     4096 Sep  5 12:01 ..\n'
+        '-rw-r--r-- 1 www-data www-data  847 Oct 23 09:14 .env\n'
+        '-rw-r--r-- 1 www-data www-data 1203 Oct 20 15:32 config.php\n'
+        'drwxr-xr-x 2 www-data www-data 4096 Oct 23 09:00 logs\n'
+        'drwxr-xr-x 3 www-data www-data 4096 Oct 19 08:22 uploads\n'
+        '-rw-r--r-- 1 www-data www-data 8291 Oct 23 09:14 index.php'
+    ),
+    'ps':      (
+        '  PID TTY          TIME CMD\n'
+        '    1 ?        00:00:03 apache2\n'
+        '  312 ?        00:02:17 php-fpm\n'
+        '  614 ?        00:00:01 mysql'
+    ),
+    'ps aux':  (
+        'USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND\n'
+        'root         1  0.0  0.2  77828  8312 ?        Ss   09:00   0:03 /usr/sbin/apache2 -k start\n'
+        'www-data   312  0.1  1.4 334268 57024 ?        S    09:00   2:17 /usr/sbin/apache2 -k start\n'
+        'mysql      614  0.2  3.1 1823456 126380 ?      Sl   09:00   0:01 /usr/sbin/mysqld'
+    ),
+    'netstat': (
+        'Active Internet connections (w/o servers)\n'
+        'Proto Recv-Q Send-Q Local Address           Foreign Address         State\n'
+        'tcp        0      0 localhost:mysql         localhost:49832         ESTABLISHED\n'
+        'tcp        0      0 prod-api-01:http        192.168.1.50:52341      ESTABLISHED'
+    ),
+    'netstat -an': (
+        'Active Internet connections (servers and established)\n'
+        'Proto Recv-Q Send-Q Local Address           Foreign Address         State\n'
+        'tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN\n'
+        'tcp        0      0 0.0.0.0:443             0.0.0.0:*               LISTEN\n'
+        'tcp        0      0 127.0.0.1:3306          0.0.0.0:*               LISTEN\n'
+        'tcp        0      0 prod-api-01:http        10.0.0.42:38910         ESTABLISHED'
+    ),
+    'ifconfig': (
+        'eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500\n'
+        '        inet 10.0.0.12  netmask 255.255.255.0  broadcast 10.0.0.255\n'
+        '        inet6 fe80::216:3eff:fe00:1  prefixlen 64  scopeid 0x20<link>\n'
+        'lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536\n'
+        '        inet 127.0.0.1  netmask 255.0.0.0'
+    ),
+    'env': (
+        'SHELL=/bin/bash\nPATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\n'
+        'HOME=/var/www\nUSER=www-data\n'
+        'DB_PASSWORD=P@ssw0rd123!\nAPI_KEY=sk_live_a1b2c3d4e5f6g7h8i9j0\n'
+        'AWS_ACCESS_KEY_ID=AKIA1234567890EXAMPLE\n'
+        'AWS_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY'
+    ),
+    'cat /etc/hosts': (
+        '127.0.0.1\tlocalhost\n'
+        '127.0.1.1\tprod-api-01\n'
+        '10.0.0.1\tgateway\n'
+        '10.0.0.20\tdb-primary\n'
+        '10.0.0.21\tdb-replica\n'
+        '10.0.0.30\tcache-01'
+    ),
+}
+
+# Patterns for command injection detection
+CMD_INJECTION_PATTERNS = [
+    # Shell operators
+    ' | ', '||', '&&', '; ', '\n',
+    # Download/execute
+    'wget', 'curl',
+    # Shells / reverse shells
+    'nc ', 'netcat', '/bin/bash', '/bin/sh', 'bash -i', '/dev/tcp', '/dev/udp',
+    'mkfifo', 'telnet',
+    # Common recon commands
+    'whoami', 'id', 'uname', 'cat ', 'ls ', 'pwd', 'echo ', 'env',
+    'ps ', 'ps aux', 'netstat', 'ifconfig',
+    # File ops
+    'chmod', 'chown', 'rm ', 'mv ', 'cp ',
+    # Windows
+    'powershell', 'cmd.exe', 'cmd /c',
+    # Code injection
+    '__import__', 'eval(', 'exec(', 'os.system',
+    # Encoding / obfuscation
+    'base64', '${ifs}', '$ifs$', '`',
+]
+
+def _classify_cmd_injection(payload: str) -> str:
+    """Return payload family for a command injection payload."""
+    p = payload.lower()
+    if any(x in p for x in ['wget', 'curl']):
+        return 'download-execute'
+    if any(x in p for x in ['nc ', 'netcat', '/dev/tcp', 'bash -i', 'mkfifo']):
+        return 'reverse-shell'
+    if any(x in p for x in ['powershell', 'cmd.exe', 'cmd /c']):
+        return 'windows-cmd'
+    if any(x in p for x in ['__import__', 'eval(', 'exec(', 'os.system']):
+        return 'code-injection'
+    if any(x in p for x in [' | ', '||', '&&', '; ', '\n']):
+        return 'shell-chaining'
+    return 'basic-command'
+
+def _lookup_cmd_output(command: str) -> str:
+    """Find the best fake output for a given command string."""
+    cmd = command.strip()
+    # Exact match first
+    if cmd in COMMAND_OUTPUTS:
+        return COMMAND_OUTPUTS[cmd]
+    # Prefix match
+    for key, output in COMMAND_OUTPUTS.items():
+        if cmd.startswith(key) or key in cmd:
+            return output
+    return f'sh: {cmd}: command not found'
+
+
 class ImprovedHoneypot:
     def __init__(self):
         self.templates = self._load_templates()
@@ -150,8 +293,13 @@ class ImprovedHoneypot:
                 break
         
         if is_path_traversal:
-            return 0.12 # Return low complexity 
-        
+            return 0.12 # Return low complexity
+
+        # Command injection patterns - use template handler
+        for pattern in CMD_INJECTION_PATTERNS:
+            if pattern in payload or pattern in path:
+                return 0.18  # Low - handled by cmd injection templates
+
         # Known simple patterns - use templates
         simple_patterns = [
             "' or '1'='1", "admin' --", "1=1", "../etc/passwd",
@@ -672,6 +820,7 @@ def catch_all(path):
                 session.system_state['logged_in_user'] = 'admin'
                 
                 token = hashlib.sha256(f"{username}{password}{time.time()}".encode()).hexdigest()[:32]
+                fake_sessions[token] = username  # register for /api/system/exec
                 
                 response_data = {
                     'status_code': 200,
@@ -827,7 +976,173 @@ def catch_all(path):
     
     return response
 
+@app.route('/api/ping', methods=['GET', 'POST'])
+def api_ping():
+    """Honeypot: network ping endpoint vulnerable to command injection."""
+    session_id = hashlib.md5(
+        f"{request.remote_addr}{request.headers.get('User-Agent', '')}".encode()
+    ).hexdigest()
+    session = session_manager.get_or_create_session(session_id)
+
+    host = (request.args.get('host') or
+            (request.get_json(silent=True) or {}).get('host', ''))
+    attack_detected = any(p in host for p in CMD_INJECTION_PATTERNS)
+
+    # Build fake ping output
+    ping_output = (
+        f"PING {host.split()[0]} ({host.split()[0]}) 56(84) bytes of data.\n"
+        f"64 bytes from {host.split()[0]}: icmp_seq=1 ttl=56 time=12.3 ms\n\n"
+        f"--- {host.split()[0]} ping statistics ---\n"
+        f"1 packets transmitted, 1 received, 0% packet loss, time 0ms"
+    )
+
+    if attack_detected:
+        # Extract injected command (everything after the operator)
+        injected = ''
+        for op in [' | ', '; ', '&&', '\n']:
+            if op in host:
+                injected = host.split(op, 1)[1].strip()
+                break
+        cmd_out = _lookup_cmd_output(injected) if injected else ''
+        ping_output += f"\n{cmd_out}" if cmd_out else ''
+
+    payload_family = _classify_cmd_injection(host) if attack_detected else None
+
+    log_entry = {
+        'timestamp': datetime.now().isoformat(),
+        'source_ip': request.remote_addr,
+        'method': request.method,
+        'path': '/api/ping',
+        'query_string': request.query_string.decode(),
+        'attack_detected': attack_detected,
+        'attack_classification': {
+            'attack_type': 'command-injection' if attack_detected else None,
+            'payload_family': payload_family,
+            'mitre_attack': {'tactic': 'TA0002', 'technique': 'T1059', 'sub_technique': 'T1059.004'} if attack_detected else None
+        } if attack_detected else None,
+        'response_type': 'ping_command_injection' if attack_detected else 'ping_normal',
+    }
+    logging.info(json.dumps(log_entry))
+    session.add_interaction(host, ping_output, 'template', log_entry)
+
+    response = make_response(jsonify({
+        'success': True,
+        'host': host.split()[0] if host else '',
+        'result': ping_output,
+        'latency_ms': round(random.uniform(10, 25), 1),
+        'timestamp': datetime.now().isoformat(),
+    }), 200)
+    response.headers['Server'] = 'Apache/2.4.41 (Ubuntu)'
+    return response
+
+
+# In-memory session store for /api/system/exec auth
+fake_sessions = {}
+
+@app.route('/api/system/exec', methods=['POST'])
+def system_exec():
+    """Honeypot: authenticated system exec endpoint."""
+    session_id = hashlib.md5(
+        f"{request.remote_addr}{request.headers.get('User-Agent', '')}".encode()
+    ).hexdigest()
+    session = session_manager.get_or_create_session(session_id)
+
+    # Auth check: cookie or Authorization header
+    token = request.cookies.get('session_token') or request.headers.get('Authorization', '').replace('Bearer ', '')
+    if not token or token not in fake_sessions:
+        return make_response(jsonify({'success': False, 'error': 'Authentication required'}), 401)
+
+    body = request.get_json(silent=True) or {}
+    command = body.get('command', '')
+    cmd_output = _lookup_cmd_output(command)
+    payload_family = _classify_cmd_injection(command)
+
+    log_entry = {
+        'timestamp': datetime.now().isoformat(),
+        'source_ip': request.remote_addr,
+        'method': 'POST',
+        'path': '/api/system/exec',
+        'attack_detected': True,
+        'attack_classification': {
+            'attack_type': 'command-injection',
+            'payload_family': payload_family,
+            'mitre_attack': {'tactic': 'TA0002', 'technique': 'T1059', 'sub_technique': 'T1059.004'}
+        },
+    }
+    logging.info(json.dumps(log_entry))
+    session.add_interaction(command, cmd_output, 'template', log_entry)
+
+    response = make_response(jsonify({
+        'success': True,
+        'command': command,
+        'output': cmd_output,
+        'exit_code': 0,
+        'execution_time_ms': round(random.uniform(80, 200)),
+        'user': 'www-data',
+        'working_directory': '/var/www/html',
+        'timestamp': datetime.now().isoformat(),
+    }), 200)
+    response.headers['Server'] = 'Apache/2.4.41 (Ubuntu)'
+    return response
+
+
+@app.route('/api/convert', methods=['GET', 'POST'])
+def api_convert():
+    """Honeypot: file conversion endpoint vulnerable to injection via filename."""
+    session_id = hashlib.md5(
+        f"{request.remote_addr}{request.headers.get('User-Agent', '')}".encode()
+    ).hexdigest()
+    session = session_manager.get_or_create_session(session_id)
+
+    file_param = (request.args.get('file') or
+                  (request.get_json(silent=True) or {}).get('file', ''))
+    fmt = request.args.get('format', 'pdf')
+    attack_detected = any(p in file_param for p in CMD_INJECTION_PATTERNS)
+
+    injected_out = ''
+    if attack_detected:
+        for op in ['; ', ' | ', '&&', '\n']:
+            if op in file_param:
+                injected_cmd = file_param.split(op, 1)[1].strip()
+                injected_out = _lookup_cmd_output(injected_cmd)
+                break
+        payload_family = _classify_cmd_injection(file_param)
+    else:
+        payload_family = None
+
+    body = {
+        'success': True,
+        'file': file_param.split(';')[0].split('|')[0].strip(),
+        'format': fmt,
+        'download_url': f'/downloads/converted_{random.randint(1000,9999)}.{fmt}',
+        'timestamp': datetime.now().isoformat(),
+    }
+    if injected_out:
+        body['debug'] = f'[DEBUG] Pre-conversion hook output:\n{injected_out}'
+
+    log_entry = {
+        'timestamp': datetime.now().isoformat(),
+        'source_ip': request.remote_addr,
+        'method': request.method,
+        'path': '/api/convert',
+        'query_string': request.query_string.decode(),
+        'attack_detected': attack_detected,
+        'attack_classification': {
+            'attack_type': 'command-injection',
+            'payload_family': payload_family,
+            'mitre_attack': {'tactic': 'TA0002', 'technique': 'T1059', 'sub_technique': 'T1059.004'}
+        } if attack_detected else None,
+    }
+    logging.info(json.dumps(log_entry))
+    session.add_interaction(file_param, str(body), 'template', log_entry)
+
+    response = make_response(jsonify(body), 200)
+    response.headers['Server'] = 'Apache/2.4.41 (Ubuntu)'
+    return response
+
+
 @app.route('/api/stats')
+
 def stats():
     """Show honeypot statistics"""
     try:
@@ -872,6 +1187,11 @@ if __name__ == '__main__':
     print("  ✓ Response caching")
     print("  ✓ Persona validation")
     print("  ✓ Hybrid routing (80/20)")
+    print("  ✓ Command Injection (OWASP A03 / MITRE T1059) [NEW]")
+    print("    - /api/ping    : ping injection via host param")
+    print("    - /api/system/exec : authenticated exec (login first)")
+    print("    - /api/convert : file conversion injection via file param")
+    print(f"\nOWASP coverage: 5/10 categories")
     print("\nStarting server on http://localhost:8082")
     print("Stats: http://localhost:8082/api/stats")
     print("="*70)
